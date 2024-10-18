@@ -1,4 +1,4 @@
-package co.edu.ucentral.paginavehiculos.vehiculos_usados.Persistencia.Entidades;
+package co.edu.ucentral.paginavehiculos.vehiculos_usados.persistencia.entidades;
 
 public class Vehiculos
 {
