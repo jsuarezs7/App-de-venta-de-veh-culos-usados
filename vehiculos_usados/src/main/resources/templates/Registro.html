@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registro de Usuario</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+        .container {
+          background-color: #fff;
+          padding: 50px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          width: 300px;
+          text-align: center;
+        }
+        h1 {
+          font-size: 24px;
+          margin-bottom: 20px;
+        }
+        label {
+          display: block;
+          margin-top: 10px;
+          text-align: left;
+        }
+        input, select {
+          width: 100%;
+          padding: 10px;
+          margin-top: 5px;
+          margin-bottom: 20px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+        }
+        button {
+          background-color: #a11212;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          width: 48%;
+          margin-right: 4%;
+        }
+        button:hover {
+          background-color: #1507ad;
+        }
+        .login-button {
+          background-color: #007bff;
+          color: white;
+        }
+        .login-button:hover {
+          background-color: #0056b3;
+        }
+        .button-container {
+          display: flex;
+          justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Formulario de Registro</h1>
+    <form th:action="@{/almacenar}" method="post" th:object="${elusuario}">
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required th:field="*{usuario}">
+
+        <label for="contrasena">Contrasena:</label>
+        <input type="password" id="contrasena" name="contrasena" required th:field="*{contrasena}">
+
+        <label for="rol">Rol:</label>
+        <select name="rol" id="rol">
+            <option value="comprador">Comprador</option>
+            <option value="vendedor">Vendedor</option>
+        </select>
+
+        <div class="button-container">
+            <button type="submit">Registrar</button>
+            <button type="button" class="login-button" onclick="window.location.href='/inicio-sesion'">Ir a inicio de sesion</button>
+        </div>
+    </form>
+    <!-- Mensaje de éxito o error -->
+    <p class="message" th:text="${mensaje}"></p>
+</div>
+</body>
+</html>

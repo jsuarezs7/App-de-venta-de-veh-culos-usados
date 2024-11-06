@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Vehículos</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Contenedor de los botones */
+        .sidebar {
+            background-color: #2d3e50;
+            color: #fff;
+            width: 200px;
+            padding-top: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .sidebar button {
+            background-color: #4b5d72;
+            color: white;
+            padding: 15px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .sidebar button:hover {
+            background-color: #1a2b37;
+        }
+
+        /* Contenedor principal */
+        .main-content {
+            flex-grow: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: #ffffff;
+            overflow: auto;
+        }
+
+        .main-content h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Modal de registro */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 10px;
+            width: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Formulario del modal */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form label {
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+        form input, form textarea {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            width: 100%;
+        }
+        form button {
+            background-color: #1a2b37;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        form button:hover {
+            background-color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Sidebar con los botones -->
+    <div class="sidebar">
+        <button id="btnRegistrar">Registrar Vehículo</button>
+        <button>Editar Vehículo</button>
+        <button>Eliminar Vehículo</button>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <h1>Gestión de Vehículos</h1>
+        <p>Aquí aparecerá la información del vehículo registrado.</p>
+
+        <!-- Aquí se pueden mostrar los datos registrados en el futuro -->
+        <div id="vehicle-info"></div>
+    </div>
+</div>
+
+<!-- Modal para el registro de vehículo -->
+<div id="modalRegistrar" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Registro Vehículo</h2>
+        <form id="vehicleForm">
+            <label for="marca">Marca:</label>
+            <input type="text" id="marca" name="marca" required>
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" required>
+
+            <label for="fecha">Fecha (DD/MM/YYYY):</label>
+            <input type="text" id="fecha" name="fecha" required pattern="\d{2}/\d{2}/\d{4}"
+                   placeholder="DD/MM/YYYY" title="Formato: DD/MM/YYYY (ej. 28/01/2004)">
+
+            <label for="kilometraje">Kilometraje:</label>
+            <input type="text" id="kilometraje" name="kilometraje" required>
+
+            <label for="precio">Precio:</label>
+            <input type="text" id="precio" name="precio" required>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
+
+            <button type="submit">Registrar Vehículo</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    var modal = document.getElementById("modalRegistrar");
+    var btnRegistrar = document.getElementById("btnRegistrar");
+    var span = document.getElementsByClassName("close")[0];
+    var vehicleInfoDiv = document.getElementById("vehicle-info");
+    var vehicleForm = document.getElementById("vehicleForm");
+
+    // Mostrar modal cuando se hace clic en "Registrar Vehículo"
+    btnRegistrar.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Cerrar modal cuando se hace clic en la "X"
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Cerrar modal si se hace clic fuera del mismo
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Manejar el envío del formulario sin redirección
+    vehicleForm.onsubmit = function(event) {
+        event.preventDefault();
+
+        // Obtener valores del formulario
+        var marca = document.getElementById("marca").value;
+        var modelo = document.getElementById("modelo").value;
+        var fecha = document.getElementById("fecha").value;
+        var kilometraje = document.getElementById("kilometraje").value;
+        var precio = document.getElementById("precio").value;
+        var descripcion = document.getElementById("descripcion").value;
+
+        // Mostrar la información del vehículo
+        vehicleInfoDiv.innerHTML = `
+            <h3>Vehículo Registrado:</h3>
+            <p><strong>Marca:</strong> ${marca}</p>
+            <p><strong>Modelo:</strong> ${modelo}</p>
+            <p><strong>Fecha:</strong> ${fecha}</p>
+            <p><strong>Kilometraje:</strong> ${kilometraje}</p>
+            <p><strong>Precio:</strong> ${precio}</p>
+            <p><strong>Descripción:</strong> ${descripcion}</p>
+
+        `;
+
+        // Cerrar el modal
+        modal.style.display = "none";
+        // Limpiar el formulario
+        vehicleForm.reset();
+    };
+</script>
+
+</body>
+</html>
