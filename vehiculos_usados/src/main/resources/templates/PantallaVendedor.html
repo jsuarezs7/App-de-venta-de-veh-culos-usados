@@ -15,38 +15,32 @@
             align-items: flex-start;
             height: 100vh;
             overflow: hidden;
+            flex-direction: column; /* Apilamos los elementos en columna */
         }
-        .container {
+
+        /* Contenedor de los botones en la parte superior */
+        .button-container {
+            background-color: #ffcc00; /* Amarillo */
+            padding: 15px;
             display: flex;
-            height: 100%;
+            justify-content: center;
             width: 100%;
         }
 
-        /* Contenedor de los botones */
-        .sidebar {
-            background-color: #2d3e50;
-            color: #fff;
-            width: 200px;
-            padding-top: 30px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .sidebar button {
-            background-color: #4b5d72;
-            color: white;
-            padding: 15px;
-            width: 80%;
-            margin-bottom: 20px;
+        .button-container button {
+            background-color: #ffcc00; /* Amarillo */
+            color: black; /* Letra en negro */
+            padding: 15px 30px;
+            margin-right: 10px;
             border: none;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .sidebar button:hover {
-            background-color: #1a2b37;
+
+        .button-container button:hover {
+            background-color: #e6b800; /* Amarillo más oscuro */
         }
 
         /* Contenedor principal */
@@ -60,10 +54,16 @@
             overflow: auto;
         }
 
+        /* Estilo del título y texto en la parte principal */
         .main-content h1 {
             font-size: 28px;
             margin-bottom: 20px;
-            color: #333;
+            color: black; /* Letra en negro */
+        }
+
+        .main-content p {
+            font-size: 18px;
+            color: black; /* Letra en negro */
         }
 
         /* Modal de registro */
@@ -112,6 +112,7 @@
             font-weight: bold;
             margin-bottom: 5px;
             margin-top: 15px;
+            color: black; /* Letra en negro */
         }
         form input, form textarea {
             padding: 12px;
@@ -138,22 +139,20 @@
 </head>
 <body>
 
-<div class="container">
-    <!-- Sidebar con los botones -->
-    <div class="sidebar">
-        <button id="btnRegistrar">Registrar Vehículo</button>
-        <button>Editar Vehículo</button>
-        <button>Eliminar Vehículo</button>
-    </div>
+<!-- Contenedor de botones en la parte superior -->
+<div class="button-container">
+    <button id="btnRegistrar">Registrar Vehículo</button>
+    <button>Editar Vehículo</button>
+    <button>Eliminar Vehículo</button>
+</div>
 
-    <!-- Contenido principal -->
-    <div class="main-content">
-        <h1>Gestión de Vehículos</h1>
-        <p>Aquí aparecerá la información del vehículo registrado.</p>
+<!-- Contenido principal -->
+<div class="main-content">
+    <h1>Gestión de Vehículos</h1>
+    <p>Aquí aparecerá la información del vehículo registrado.</p>
 
-        <!-- Aquí se pueden mostrar los datos registrados en el futuro -->
-        <div id="vehicle-info"></div>
-    </div>
+    <!-- Aquí se pueden mostrar los datos registrados en el futuro -->
+    <div id="vehicle-info"></div>
 </div>
 
 <!-- Modal para el registro de vehículo -->
@@ -231,7 +230,6 @@
             <p><strong>Kilometraje:</strong> ${kilometraje}</p>
             <p><strong>Precio:</strong> ${precio}</p>
             <p><strong>Descripción:</strong> ${descripcion}</p>
-
         `;
 
         // Cerrar el modal

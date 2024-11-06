@@ -39,7 +39,7 @@
           border: 1px solid #ccc;
         }
         button {
-          background-color: #a11212;
+          background-color: #28a745; /* Verde claro */
           color: white;
           padding: 10px 20px;
           border: none;
@@ -49,14 +49,14 @@
           margin-right: 4%;
         }
         button:hover {
-          background-color: #1507ad;
+          background-color: #218838; /* Verde oscuro */
         }
         .login-button {
-          background-color: #007bff;
+          background-color: #28a745; /* Verde claro */
           color: white;
         }
         .login-button:hover {
-          background-color: #0056b3;
+          background-color: #218838; /* Verde oscuro */
         }
         .button-container {
           display: flex;
@@ -72,7 +72,7 @@
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required th:field="*{usuario}">
 
-        <label for="contrasena">Contrasena:</label>
+        <label for="contrasena">Contraseña:</label>
         <input type="password" id="contrasena" name="contrasena" required th:field="*{contrasena}">
 
         <label for="rol">Rol:</label>
@@ -83,7 +83,7 @@
 
         <div class="button-container">
             <button type="submit">Registrar</button>
-            <button type="button" class="login-button" onclick="window.location.href='/inicio-sesion'">Ir a inicio de sesion</button>
+            <button type="button" class="login-button" onclick="window.location.href='/inicio-sesion'">Ir a inicio de sesión</button>
         </div>
     </form>
     <!-- Mensaje de éxito o error -->
