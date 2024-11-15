@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +29,7 @@ public class Vehiculos {
     @Column(name = "veh_modelo", nullable = false)
     private String modelo;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "veh_fecha", nullable = false)
     private LocalDate fecha;
 
@@ -38,4 +42,6 @@ public class Vehiculos {
     @Column(name = "veh_descripcion", nullable = true, length = 500)
     private String descripcion;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "vehiculo", cascade = CascadeType.ALL)
+    private List<Imagen> imagenes;
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class VehiculosControlador {
 
     @Autowired
-    VehiculosServicio VehiculosServicio;
+    VehiculosServicio vehiculosServicio;
 
     // Carga el formulario de registro de vehículo
     @GetMapping("/registro-vehiculo")
@@ -26,15 +26,31 @@ public class VehiculosControlador {
 
     // Maneja el envío del formulario y guarda el vehículo
     @PostMapping("/almacenar-vehiculo")
-    public String registrarVehiculo(@ModelAttribute("vehiculo") Vehiculos vehiculo, Model model) {
-        VehiculosServicio.registrarVehiculo(vehiculo);
-        model.addAttribute("mensaje", "Vehículo registrado exitosamente");
-        return "registro-vehiculo"; // Retorna a la misma página después del registro
+    public String registrarVehiculo(@ModelAttribute("elvehiculo") Vehiculos vehiculo, Model model) {
+        vehiculosServicio.registrarVehiculo(vehiculo);
+        model.addAttribute("mensajeExito", "¡Vehículo registrado exitosamente!"); // Agrega el mensaje de éxito
+        model.addAttribute("elvehiculo", new Vehiculos()); // Limpiar el formulario
+        model.addAttribute("vehiculos", vehiculosServicio.obtenerTodosLosVehiculos()); // Obtener y mostrar vehículos
+        return "pantallaVendedor"; // Redirigir a la página principal del vendedor
     }
+
+    // Método para mostrar la página inicial del vendedor con la lista de vehículos
     @GetMapping("/pantalla-vendedor")
     public String mostrarFormularioDeVendedor(Model model) {
-        return "pantallaVendedor";
+        model.addAttribute("elvehiculo", new Vehiculos());
+        model.addAttribute("vehiculos", vehiculosServicio.obtenerTodosLosVehiculos()); // Obtener y mostrar vehículos
+        return "pantallaVendedor"; // Renderizar la página
     }
 
-}
+    // Página de vehículos registrados
+    @GetMapping("/vehiculos-registrados")
+    public String verVehiculosRegistrados(Model model) {
+        model.addAttribute("vehiculos", vehiculosServicio.obtenerTodosLosVehiculos()); // Obtener y mostrar vehículos registrados
+        return "vehiculosRegistrados"; // Redirigir a la vista de vehículos registrados
+    }
 
+    @GetMapping("/pantalla-comprador")
+    public String mostrarFormularioDeComprador(Model model) {
+        return "pantallaComprador"; // Renderizar la página
+    }
+}

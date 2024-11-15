@@ -2,36 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de Vehículos</title>
+    <title>Gestión de Vehículos - Vendedor</title>
     <style>
-        /* Estilos generales */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f7f7f7;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
+            flex-direction: column;
             height: 100vh;
             overflow: hidden;
-            flex-direction: column; /* Apilamos los elementos en columna */
         }
 
-        /* Contenedor de los botones en la parte superior */
-        .button-container {
-            background-color: #ffcc00; /* Amarillo */
-            padding: 15px;
+        .container {
             display: flex;
-            justify-content: center;
+            height: 100%;
             width: 100%;
+            flex-direction: column;
         }
 
-        .button-container button {
-            background-color: #ffcc00; /* Amarillo */
-            color: black; /* Letra en negro */
-            padding: 15px 30px;
-            margin-right: 10px;
+        .sidebar {
+            background-color: #f1c40f;
+            color: #000;
+            width: 100%;
+            padding-top: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .sidebar button {
+            background-color: #FFD700;
+            color: black;
+            padding: 15px;
+            margin: 5px;
             border: none;
             border-radius: 5px;
             font-size: 16px;
@@ -39,12 +48,12 @@
             transition: all 0.3s ease;
         }
 
-        .button-container button:hover {
-            background-color: #e6b800; /* Amarillo más oscuro */
+        .sidebar button:hover {
+            background-color: #FFCC00;
         }
 
-        /* Contenedor principal */
         .main-content {
+            margin-top: 70px;
             flex-grow: 1;
             padding: 50px;
             display: flex;
@@ -54,19 +63,18 @@
             overflow: auto;
         }
 
-        /* Estilo del título y texto en la parte principal */
         .main-content h1 {
             font-size: 28px;
             margin-bottom: 20px;
-            color: black; /* Letra en negro */
+            color: #333;
         }
 
-        .main-content p {
+        .success-message {
+            color: green;
             font-size: 18px;
-            color: black; /* Letra en negro */
+            margin-bottom: 20px;
         }
 
-        /* Modal de registro */
         .modal {
             display: none;
             position: fixed;
@@ -79,6 +87,7 @@
             background-color: rgba(0, 0, 0, 0.4);
             padding-top: 60px;
         }
+
         .modal-content {
             background-color: #fff;
             margin: 5% auto;
@@ -87,6 +96,7 @@
             width: 50%;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+
         .close {
             color: #aaa;
             font-size: 28px;
@@ -95,6 +105,7 @@
             top: 10px;
             right: 25px;
         }
+
         .close:hover,
         .close:focus {
             color: black;
@@ -102,18 +113,18 @@
             cursor: pointer;
         }
 
-        /* Formulario del modal */
         form {
             display: flex;
             flex-direction: column;
         }
+
         form label {
             text-align: left;
             font-weight: bold;
             margin-bottom: 5px;
             margin-top: 15px;
-            color: black; /* Letra en negro */
         }
+
         form input, form textarea {
             padding: 12px;
             margin-bottom: 15px;
@@ -121,9 +132,10 @@
             border: 1px solid #ccc;
             width: 100%;
         }
+
         form button {
-            background-color: #1a2b37;
-            color: white;
+            background-color: #FFD700;
+            color: black;
             padding: 12px;
             border: none;
             border-radius: 8px;
@@ -132,53 +144,77 @@
             width: 100%;
             margin-top: 20px;
         }
+
         form button:hover {
-            background-color: #2c3e50;
+            background-color: #FFCC00;
+        }
+
+        .image-form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-form input[type="file"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
 
-<!-- Contenedor de botones en la parte superior -->
-<div class="button-container">
-    <button id="btnRegistrar">Registrar Vehículo</button>
-    <button>Editar Vehículo</button>
-    <button>Eliminar Vehículo</button>
+<div class="container">
+    <div class="sidebar">
+        <button id="btnRegistrar">Registrar Vehículo</button>
+        <button onclick="window.location.href='/ver-vehiculos'">Ver Vehículos Registrados</button>
+        <button>Editar Vehículo</button>
+        <button>Eliminar Vehículo</button>
+    </div>
+
+    <div class="main-content">
+        <h1>Gestión de Vehículos - Vendedor</h1>
+
+        <!-- Mensaje de éxito -->
+        <div th:if="${mensajeExito}" class="success-message">
+            <p th:text="${mensajeExito}">¡Registro exitoso del vehículo!</p>
+        </div>
+
+        <p>Aquí podrás registrar, editar y eliminar vehículos.</p>
+    </div>
 </div>
 
-<!-- Contenido principal -->
-<div class="main-content">
-    <h1>Gestión de Vehículos</h1>
-    <p>Aquí aparecerá la información del vehículo registrado.</p>
-
-    <!-- Aquí se pueden mostrar los datos registrados en el futuro -->
-    <div id="vehicle-info"></div>
-</div>
-
-<!-- Modal para el registro de vehículo -->
+<!-- Modal Registrar Vehículo -->
 <div id="modalRegistrar" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Registro Vehículo</h2>
-        <form id="vehicleForm">
+        <form th:action="@{/almacenar-vehiculo}" method="post" th:object="${elvehiculo}">
             <label for="marca">Marca:</label>
-            <input type="text" id="marca" name="marca" required>
+            <input type="text" th:field="*{marca}" id="marca" name="marca" required />
 
             <label for="modelo">Modelo:</label>
-            <input type="text" id="modelo" name="modelo" required>
+            <input type="text" th:field="*{modelo}" id="modelo" name="modelo" required />
 
             <label for="fecha">Fecha (DD/MM/YYYY):</label>
-            <input type="text" id="fecha" name="fecha" required pattern="\d{2}/\d{2}/\d{4}"
-                   placeholder="DD/MM/YYYY" title="Formato: DD/MM/YYYY (ej. 28/01/2004)">
+            <input type="text" th:field="*{fecha}" id="fecha" name="fecha" required pattern="\d{2}/\d{2}/\d{4}"
+                   placeholder="DD/MM/YYYY" title="Formato: DD/MM/YYYY (ej. 28/01/2004)" />
 
             <label for="kilometraje">Kilometraje:</label>
-            <input type="text" id="kilometraje" name="kilometraje" required>
+            <input type="text" th:field="*{kilometraje}" id="kilometraje" name="kilometraje" required />
 
             <label for="precio">Precio:</label>
-            <input type="text" id="precio" name="precio" required>
+            <input type="text" th:field="*{precio}" id="precio" name="precio" required />
 
             <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
+            <textarea th:field="*{descripcion}" id="descripcion" name="descripcion" rows="3" required></textarea>
+
+            <div class="image-form">
+                <label for="imagen">Seleccionar Imagen (opcional):</label>
+                <input type="file" id="imagen" name="imagen" accept="image/*" />
+            </div>
 
             <button type="submit">Registrar Vehículo</button>
         </form>
@@ -186,57 +222,23 @@
 </div>
 
 <script>
-    var modal = document.getElementById("modalRegistrar");
+    var modalRegistrar = document.getElementById("modalRegistrar");
     var btnRegistrar = document.getElementById("btnRegistrar");
-    var span = document.getElementsByClassName("close")[0];
-    var vehicleInfoDiv = document.getElementById("vehicle-info");
-    var vehicleForm = document.getElementById("vehicleForm");
+    var spanRegistrar = document.getElementsByClassName("close")[0];
 
-    // Mostrar modal cuando se hace clic en "Registrar Vehículo"
     btnRegistrar.onclick = function() {
-        modal.style.display = "block";
+        modalRegistrar.style.display = "block";
     }
 
-    // Cerrar modal cuando se hace clic en la "X"
-    span.onclick = function() {
-        modal.style.display = "none";
+    spanRegistrar.onclick = function() {
+        modalRegistrar.style.display = "none";
     }
 
-    // Cerrar modal si se hace clic fuera del mismo
     window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == modalRegistrar) {
+            modalRegistrar.style.display = "none";
         }
     }
-
-    // Manejar el envío del formulario sin redirección
-    vehicleForm.onsubmit = function(event) {
-        event.preventDefault();
-
-        // Obtener valores del formulario
-        var marca = document.getElementById("marca").value;
-        var modelo = document.getElementById("modelo").value;
-        var fecha = document.getElementById("fecha").value;
-        var kilometraje = document.getElementById("kilometraje").value;
-        var precio = document.getElementById("precio").value;
-        var descripcion = document.getElementById("descripcion").value;
-
-        // Mostrar la información del vehículo
-        vehicleInfoDiv.innerHTML = `
-            <h3>Vehículo Registrado:</h3>
-            <p><strong>Marca:</strong> ${marca}</p>
-            <p><strong>Modelo:</strong> ${modelo}</p>
-            <p><strong>Fecha:</strong> ${fecha}</p>
-            <p><strong>Kilometraje:</strong> ${kilometraje}</p>
-            <p><strong>Precio:</strong> ${precio}</p>
-            <p><strong>Descripción:</strong> ${descripcion}</p>
-        `;
-
-        // Cerrar el modal
-        modal.style.display = "none";
-        // Limpiar el formulario
-        vehicleForm.reset();
-    };
 </script>
 
 </body>

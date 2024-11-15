@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehículos Registrados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4b400;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Vehículos Registrados</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Fecha</th>
+            <th>Kilometraje</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vehiculo : ${vehiculos}">
+            <td th:text="${vehiculo.marca}">Marca</td>
+            <td th:text="${vehiculo.modelo}">Modelo</td>
+            <td th:text="${vehiculo.fecha}">Fecha</td>
+            <td th:text="${vehiculo.kilometraje}">Kilometraje</td>
+            <td th:text="${vehiculo.precio}">Precio</td>
+            <td th:text="${vehiculo.descripcion}">Descripción</td>
+        </tr>
+        </tbody>
+    </table>
+    <button onclick="window.location.href='/pantalla-vendedor'">Volver</button>
+</div>
+</body>
+</html>

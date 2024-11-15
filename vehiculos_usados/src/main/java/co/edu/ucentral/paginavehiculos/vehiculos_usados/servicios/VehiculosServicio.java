@@ -13,22 +13,25 @@ import java.util.List;
 public class VehiculosServicio {
 
     @Autowired
-    VehiculosRepositorio VehiculoRepositorio;
+    VehiculosRepositorio VehiculosRepositorio;
 
-    // Registrar un vehículo en la base de datos
     public void registrarVehiculo(Vehiculos vehiculo) {
-        VehiculoRepositorio.save(vehiculo);
+        VehiculosRepositorio.save(vehiculo);
+    }
+
+    public List<Vehiculos> obtenerTodosLosVehiculos() {
+        return (List<Vehiculos>) VehiculosRepositorio.findAll();
     }
 
     // Obtener todos los vehículos
     public List<Vehiculos> obtenerTodos() {
-        return (List<Vehiculos>) VehiculoRepositorio.findAll();
+        return (List<Vehiculos>) VehiculosRepositorio.findAll();
     }
 
     // Eliminar un vehículo
     public boolean borrarVehiculo(Vehiculos vehiculo) {
         try {
-            VehiculoRepositorio.delete(vehiculo);
+            VehiculosRepositorio.delete(vehiculo);
             return true;
         } catch (Exception e) {
             return false;
