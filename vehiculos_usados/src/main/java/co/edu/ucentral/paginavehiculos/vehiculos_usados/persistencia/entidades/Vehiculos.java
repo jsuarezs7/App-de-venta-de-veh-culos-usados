@@ -1,5 +1,5 @@
-
 package co.edu.ucentral.paginavehiculos.vehiculos_usados.persistencia.entidades;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +16,9 @@ import java.util.List;
 @Getter
 @Table(name = "vehiculos")
 @Entity
+
 public class Vehiculos {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +46,8 @@ public class Vehiculos {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "vehiculo", cascade = CascadeType.ALL)
     private List<Imagen> imagenes;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }

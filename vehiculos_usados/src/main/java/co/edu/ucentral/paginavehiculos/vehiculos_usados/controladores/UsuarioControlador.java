@@ -2,6 +2,7 @@ package co.edu.ucentral.paginavehiculos.vehiculos_usados.controladores;
 
 import co.edu.ucentral.paginavehiculos.vehiculos_usados.persistencia.entidades.Usuario;
 import co.edu.ucentral.paginavehiculos.vehiculos_usados.servicios.UsuarioServicio;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UsuarioControlador {
 
     @Autowired
-    UsuarioServicio UsuarioServicio;
+    UsuarioServicio usuarioServicio;
 
     // Mostrar la pestaña registro
-    @GetMapping("/")
+    @GetMapping("/registro")
     public String mostrarFormularioDeRegistro(Model model) {
         Usuario usuario = new Usuario();
         model.addAttribute("elusuario", usuario);
@@ -29,7 +30,7 @@ public class UsuarioControlador {
     // Registro de usuario y guardar en la base de datos
     @PostMapping("/almacenar")
     public String registrarUsuario(@ModelAttribute("elusuario") Usuario usuario, Model model) {
-        UsuarioServicio.registrarUsuario(usuario);
+        usuarioServicio.registrarUsuario(usuario);
         model.addAttribute("mensaje", "Usuario registrado exitosamente");
 
         model.addAttribute("elusuario", usuario);
@@ -41,25 +42,28 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/inicio-sesion")
-    public String iniciarSesion(@RequestParam String usuario, @RequestParam String contrasena, Model model) {
-        // Llamar al servicio para autenticar al usuario
-        Usuario usuarioAutenticado = UsuarioServicio.validarUsuario(usuario, contrasena);
+    public String iniciarSesion(@RequestParam String usuario, @RequestParam String contrasena, Model model, HttpServletRequest request) {
+        Usuario usuarioAutenticado = usuarioServicio.validarUsuario(usuario, contrasena);
 
-        // Verificar si el usuario fue encontrado y autenticado correctamente
         if (usuarioAutenticado != null) {
+            // Guardar el usuario logueado en la sesión
+            request.getSession().setAttribute("usuario", usuarioAutenticado);
+
             // Redirigir según el rol del usuario
             switch (usuarioAutenticado.getRol()) {
                 case "vendedor":
                     return "redirect:/pantalla-vendedor";  // Redirige a la página del vendedor
                 case "comprador":
-                    return "redirect:/pantallaComprador";  // Redirige a la página del comprador
+                    return "redirect:/pantalla-comprador";  // Redirige a la página del comprador
                 default:
                     model.addAttribute("error", "Rol no reconocido");
-                    return "iniciosesion";  // Redirige al login si el rol no es reconocido
+                    return "inicioSesion";  // Redirige al login si el rol no es reconocido
             }
         } else {
             model.addAttribute("error", "Usuario o contraseña incorrectos");
-            return "iniciosesion";  // Redirige al login si la autenticación falla
+            return "inicioSesion";  // Redirige al login si la autenticación falla
         }
     }
+
+
 }

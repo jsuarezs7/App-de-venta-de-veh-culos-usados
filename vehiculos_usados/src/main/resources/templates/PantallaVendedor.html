@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f7f7f7;
+            background-color: #e8f5e9; /* Fondo verde claro */
             margin: 0;
             padding: 0;
             display: flex;
@@ -23,8 +23,8 @@
         }
 
         .sidebar {
-            background-color: #f1c40f;
-            color: #000;
+            background-color: #66bb6a; /* Fondo verde */
+            color: #fff;
             width: 100%;
             padding-top: 10px;
             text-align: center;
@@ -37,8 +37,8 @@
         }
 
         .sidebar button {
-            background-color: #FFD700;
-            color: black;
+            background-color: #81c784; /* Verde más claro */
+            color: white;
             padding: 15px;
             margin: 5px;
             border: none;
@@ -49,7 +49,7 @@
         }
 
         .sidebar button:hover {
-            background-color: #FFCC00;
+            background-color: #66bb6a; /* Verde oscuro al hacer hover */
         }
 
         .main-content {
@@ -66,7 +66,7 @@
         .main-content h1 {
             font-size: 28px;
             margin-bottom: 20px;
-            color: #333;
+            color: #388e3c; /* Verde oscuro para el título */
         }
 
         .success-message {
@@ -129,13 +129,13 @@
             padding: 12px;
             margin-bottom: 15px;
             border-radius: 8px;
-            border: 1px solid #ccc;
+            border: 1px solid #66bb6a; /* Verde claro para los bordes */
             width: 100%;
         }
 
         form button {
-            background-color: #FFD700;
-            color: black;
+            background-color: #66bb6a; /* Verde claro */
+            color: white;
             padding: 12px;
             border: none;
             border-radius: 8px;
@@ -146,7 +146,7 @@
         }
 
         form button:hover {
-            background-color: #FFCC00;
+            background-color: #81c784; /* Verde más oscuro en hover */
         }
 
         .image-form {
@@ -162,6 +162,23 @@
             border-radius: 8px;
             border: 1px solid #ccc;
         }
+
+        .logout-button {
+            background-color: #388e3c; /* Verde oscuro para el botón de cerrar sesión */
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .logout-button:hover {
+            background-color: #66bb6a; /* Verde más claro en hover */
+        }
+
     </style>
 </head>
 <body>
@@ -170,8 +187,6 @@
     <div class="sidebar">
         <button id="btnRegistrar">Registrar Vehículo</button>
         <button onclick="window.location.href='/ver-vehiculos'">Ver Vehículos Registrados</button>
-        <button>Editar Vehículo</button>
-        <button>Eliminar Vehículo</button>
     </div>
 
     <div class="main-content">
@@ -182,7 +197,10 @@
             <p th:text="${mensajeExito}">¡Registro exitoso del vehículo!</p>
         </div>
 
-        <p>Aquí podrás registrar, editar y eliminar vehículos.</p>
+        <p>Aquí podrás registrar vehículos.</p>
+
+        <!-- Botón de Cerrar sesión -->
+        <button class="logout-button" onclick="window.location.href='/inicio-sesion'">Cerrar sesión</button>
     </div>
 </div>
 

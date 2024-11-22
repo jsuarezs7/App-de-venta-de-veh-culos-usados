@@ -1,10 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Gestión de Vehículos - Comprador</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        /* Barra de botones en la parte superior */
+        .top-bar {
+            background-color: #66bb6a; /* Verde */
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            padding: 10px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .top-bar button {
+            background-color: #81c784; /* Verde más claro */
+            color: white;
+            padding: 10px 20px;
+            margin-right: 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .top-bar button:hover {
+            background-color: #66bb6a; /* Verde oscuro en hover */
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: #ffffff;
+            overflow: auto;
+        }
+
+        .main-content h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Tabla para mostrar los vehículos */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #1a2b37;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+
+        table td {
+            color: #555;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
+    <!-- Barra superior con botones -->
+    <div class="top-bar">
+        <button id="btnBuscar">Buscar Vehículo</button>
+        <button id="btnSalir">Cerrar sesión</button>
+    </div>
 
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <h1>Gestión de Vehículos - Comprador</h1>
+
+        <!-- Tabla de vehículos -->
+        <h2>Vehículos Disponibles</h2>
+        <table border="1">
+            <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Fecha</th>
+                <th>Kilometraje</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+            </tr>
+            <tr th:each="vehiculo : ${vehiculos}">
+                <td th:text="${vehiculo.marca}"></td>
+                <td th:text="${vehiculo.modelo}"></td>
+                <td th:text="${vehiculo.fecha}"></td>
+                <td th:text="${vehiculo.kilometraje}"></td>
+                <td th:text="${vehiculo.precio}"></td>
+                <td th:text="${vehiculo.descripcion}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.getElementById("btnSalir").onclick = function () {
+    window.location.href = "/cerrar-sesion";  // Esto invoca el método que cierra la sesión
+};
+</script>
 </body>
 </html>

@@ -1,7 +1,6 @@
 package co.edu.ucentral.paginavehiculos.vehiculos_usados.servicios;
 
 
-
 import co.edu.ucentral.paginavehiculos.vehiculos_usados.persistencia.entidades.Usuario;
 import co.edu.ucentral.paginavehiculos.vehiculos_usados.persistencia.repositorios.UsuarioRepositorio;
 import lombok.AllArgsConstructor;
@@ -14,18 +13,18 @@ import java.util.List;
 public class UsuarioServicio {
 
     @Autowired
-    UsuarioRepositorio UsuarioRepositorio;
+    UsuarioRepositorio usuarioRepositorio;
     public void registrarUsuario(Usuario usuario) {
-        UsuarioRepositorio.save(usuario);
+        usuarioRepositorio.save(usuario);
     }
 
     public List<Usuario> obtenerTodos(){
-        List<Usuario> listado = (List<Usuario>) UsuarioRepositorio.findAll();
+        List<Usuario> listado = (List<Usuario>) usuarioRepositorio.findAll();
         return listado;
     }
     public boolean borrar(Usuario usuario){
         try{
-            UsuarioRepositorio.delete(usuario);
+            usuarioRepositorio.delete(usuario);
         }catch (Exception e){
             return false;
         }
@@ -34,7 +33,7 @@ public class UsuarioServicio {
 
     public Usuario validarUsuario(String nombreUsuario, String contrasena) {
         // Buscar el usuario por su nombre de usuario
-        Usuario usuarioEncontrado = UsuarioRepositorio.findByUsuario(nombreUsuario).orElse(null);
+        Usuario usuarioEncontrado = usuarioRepositorio.findByUsuario(nombreUsuario).orElse(null);
 
         if (usuarioEncontrado != null) {
             // Verificar que la contraseña coincida
