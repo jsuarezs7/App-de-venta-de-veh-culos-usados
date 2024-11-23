@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Editar vehiculo</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        background-color: #fff;
+        padding: 50px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        text-align: center;
+    }
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        margin-top: 10px;
+        text-align: left;
+    }
+    input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    button {
+        background-color: #a11212;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    button:hover {
+        background-color: #1507ad;
+    }
+    .plus {
+        margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Editar vehiculo</h1>
+  <form action="/registro-vehiculo" method="post" enctype="multipart/form-data">
+    <label for="marca">Marca:</label>
+    <input type="text" id="marca" name="marca" required>
+
+    <label for="modelo">Modelo:</label>
+    <input type="text" id="modelo" name="modelo" required>
+
+    <label for="fecha">Fecha:</label>
+    <input type="text" id="fecha" name="fecha" required pattern="\d{4}">
+
+    <label for="kilometraje">Kilometraje:</label>
+    <input type="text" id="kilometraje" name="kilometraje" required>
+
+    <label for="precio">Precio:</label>
+    <input type="text" id="precio" name="precio" required>
+
+    <label for="descripcion">Descripcion:</label>
+    <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
+
+    <button type="submit"><span class="plus"></span>Guardar cambios del vehiculo</button>
+  </form>
+  <p th:text="${mensaje}"></p>
+
+</div>
+</body>
+</html>

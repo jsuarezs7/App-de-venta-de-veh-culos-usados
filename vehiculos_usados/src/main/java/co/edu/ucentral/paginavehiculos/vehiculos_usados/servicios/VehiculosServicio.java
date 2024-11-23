@@ -57,4 +57,11 @@ public class VehiculosServicio {
     public List<Vehiculos> obtenerVehiculosPorUsuario(Usuario usuario) {
         return vehiculosRepositorio.findByUsuario(usuario);
     }
+
+    public boolean validarPropiedadVehiculo(Long vehiculoId, Usuario usuario) {
+        Vehiculos vehiculo = vehiculosRepositorio.findById(vehiculoId).orElse(null);
+        return vehiculo != null && vehiculo.getUsuario().getUsuario().equals(usuario.getUsuario());
+    }
 }
+
+

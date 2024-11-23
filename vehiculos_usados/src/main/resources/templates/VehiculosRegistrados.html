@@ -173,31 +173,6 @@
             background-color: #c0392b;
         }
 
-        .image-form {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .image-form input[type="file"] {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-
-        .image-form button {
-            background-color: #1a2b37;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
@@ -243,7 +218,7 @@
 
 <div class="container">
     <div class="sidebar">
-          <h3>Panel de Administración</h3>
+        <h3>Panel de Administración</h3>
     </div>
 
     <div class="main-content">
@@ -297,21 +272,33 @@
     </div>
 </div>
 
-<script>
-    var modalRegistrar = document.getElementById("modalRegistrar");
-    var btnRegistrar = document.getElementById("btnRegistrar");
-    var closeRegistrar = document.getElementById("closeRegistrar");
+<!-- Modal de edición de vehículo -->
+<div id="modalEditar" class="modal">
+    <div class="modal-content">
+        <span id="closeEditar" class="close">&times;</span>
+        <h2>Editar Vehículo</h2>
+        <form action="/editar-vehiculo" method="post">
+            <input type="hidden" id="idEditar" name="id" value="">
+            <label for="marcaEditar">Marca</label>
+            <input type="text" id="marcaEditar" name="marca" required>
+            <label for="modeloEditar">Modelo</label>
+            <input type="text" id="modeloEditar" name="modelo" required>
+            <label for="fechaEditar">Fecha</label>
+            <input type="date" id="fechaEditar" name="fecha" required>
+            <label for="kilometrajeEditar">Kilometraje</label>
+            <input type="number" id="kilometrajeEditar" name="kilometraje" required>
+            <label for="precioEditar">Precio</label>
+            <input type="number" id="precioEditar" name="precio" required>
+            <label for="descripcionEditar">Descripción</label>
+            <textarea id="descripcionEditar" name="descripcion" required></textarea>
+            <button type="submit">Actualizar Vehículo</button>
+        </form>
+    </div>
+</div>
 
+<script>
     var modalEditar = document.getElementById("modalEditar");
     var closeEditar = document.getElementById("closeEditar");
-
-    btnRegistrar.onclick = function () {
-        modalRegistrar.style.display = "block";
-    }
-
-    closeRegistrar.onclick = function () {
-        modalRegistrar.style.display = "none";
-    }
 
     document.addEventListener("click", function (event) {
         if (event.target && event.target.className === "edit-button") {
@@ -333,8 +320,7 @@
     }
 
     window.onclick = function (event) {
-        if (event.target === modalRegistrar || event.target === modalEditar) {
-            modalRegistrar.style.display = "none";
+        if (event.target === modalEditar) {
             modalEditar.style.display = "none";
         }
     }
